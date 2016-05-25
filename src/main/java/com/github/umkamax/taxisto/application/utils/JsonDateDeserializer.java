@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 public class JsonDateDeserializer extends JsonDeserializer<Date>
 {
-	private final static SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+	private final static SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
 
 	public JsonDateDeserializer() {}

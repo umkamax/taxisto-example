@@ -1,4 +1,4 @@
-package com.github.umkamax.taxisto.config;
+package com.github.umkamax.taxisto.config.security;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

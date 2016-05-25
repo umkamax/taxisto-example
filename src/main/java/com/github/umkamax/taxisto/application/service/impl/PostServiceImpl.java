@@ -30,7 +30,7 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional
     public Post savePost(Post post) {
-        return null;
+        return postDAO.save(post);
     }
 
     @Override

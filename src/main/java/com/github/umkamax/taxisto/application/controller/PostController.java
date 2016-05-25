@@ -22,7 +22,7 @@ public class PostController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
-    public Post savePost(@RequestParam Post post) {
+    public Post savePost(@RequestBody Post post) {
         return postService.savePost(post);
     }
 

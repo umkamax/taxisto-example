@@ -11,7 +11,7 @@ import java.util.Date;
 
 public class JsonDateSerializer extends JsonSerializer<Date>
 {
-	private final static DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+	private final static DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
 	public JsonDateSerializer() {}
 
