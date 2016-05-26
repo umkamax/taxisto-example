@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface PostService {
 
-    List<Post> findPosts();
+    Long count();
+    List<Post> findPosts(Integer offset, Integer maxResults);
     Post findPostById(Long postId);
     Post savePost(Post post);
     void deletePost(Long Id);

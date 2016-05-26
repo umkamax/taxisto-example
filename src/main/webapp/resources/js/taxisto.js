@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('taxisto', []);
+var app = angular.module('taxisto', ['ui.bootstrap']);
 
 app.config(function($httpProvider) {
     $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
@@ -9,8 +9,11 @@ app.config(function($httpProvider) {
 app.factory('Post', function($http) {
     var BASE_URL = '/post';
     return {
-        list: function() {
-            return $http.get(BASE_URL);
+        count: function() {
+            return $http.get(BASE_URL + "/count");
+        },
+        list: function(offset, maxResults) {
+            return $http.get(BASE_URL, {params: {offset: offset, maxResults: maxResults}});
         },
         add: function(post) {
             return $http.post(BASE_URL, post);
@@ -18,10 +21,30 @@ app.factory('Post', function($http) {
     };
 });
 
-app.controller('PostController', function($scope, $timeout, Post) {
+app.controller('PostController', function($scope, Post) {
+
+
+    $scope.totalItems = -1;
+    $scope.itemsPerPage = 2;
+    $scope.currentPage = 1;
+    $scope.isShowPager = false;
+
+    $scope.$watch('currentPage', function() {
+        console.log('current page is: ' + $scope.currentPage);
+        $scope.refresh();
+    });
+
+    Post.count().then(
+        function(response) {
+            $scope.totalItems = response.data;
+            $scope.isShowPager = $scope.totalItems > $scope.itemsPerPage;
+        }
+    );
 
     $scope.refresh = function() {
-        Post.list().then(
+        var offset = ($scope.currentPage - 1) * $scope.itemsPerPage;
+        var maxResults = $scope.itemsPerPage;
+        Post.list(offset, maxResults).then(
             function(response) {
                 $scope.posts = response.data;
             }
@@ -34,11 +57,12 @@ app.controller('PostController', function($scope, $timeout, Post) {
         $scope.newPost.date = moment().format("DD.MM.YYYY HH:mm:ss");
         Post.add($scope.newPost).then(
             function(response) {
-                $scope.posts.push(response.data);
+                $scope.posts.unshift(response.data);
+                $scope.posts.pop();
                 $scope.newPost = {};
             }
         );
     };
 
-    $scope.refresh();
+    //$scope.refresh();
 });

@@ -6,10 +6,15 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
 public class PostDAOImpl implements PostDAO {
+
+    private static final int POSTS_BY_PAGE = 5;
 
     @PersistenceContext
     private EntityManager em;
@@ -26,7 +31,19 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public List<Post> findAll() {
-        return em.createQuery(" from " + Post.class.getName()).getResultList();
+    public Long count() {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root<Post> root = cq.from(Post.class);
+        cq.select(cb.count(root));
+        return em.createQuery(cq).getSingleResult();
+    }
+
+    @Override
+    public List<Post> findAll(Integer offset, Integer maxResults) {
+        return em.createQuery(" from " + Post.class.getName() + " order by date desc")
+                .setFirstResult(offset != null ? offset : 0)
+                .setMaxResults(maxResults != null ? maxResults : POSTS_BY_PAGE)
+                .getResultList();
     }
 }

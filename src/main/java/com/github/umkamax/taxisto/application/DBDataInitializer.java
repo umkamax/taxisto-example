@@ -18,15 +18,22 @@ public class DBDataInitializer {
     private EntityManagerFactory entityManagerFactory;
 
     public void init() throws Exception {
-
         SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        session.persist(new Post ("title", "text", new Date()));
+        session.persist(new Post ("title1", "text", new Date()));
+        session.persist(new Post ("title2", "text", new Date()));
+        session.persist(new Post ("title3", "text", new Date()));
+        session.persist(new Post ("title4", "text", new Date()));
+        session.persist(new Post ("title5", "text", new Date()));
+        session.persist(new Post ("title6", "text", new Date()));
+        session.persist(new Post ("title7", "text", new Date()));
+        session.persist(new Post ("title8", "text", new Date()));
+        session.persist(new Post ("title9", "text", new Date()));
+        session.persist(new Post ("title10", "text", new Date()));
+        session.persist(new Post ("title11", "text", new Date()));
 
         transaction.commit();
-
-        System.out.println(session.createQuery(" from " + Post.class.getName()).list());
     }
 }

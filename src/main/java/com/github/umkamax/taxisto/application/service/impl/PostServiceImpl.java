@@ -16,9 +16,14 @@ public class PostServiceImpl implements PostService {
     PostDAO postDAO;
 
     @Override
+    public Long count() {
+        return postDAO.count();
+    }
+
+    @Override
     @Transactional(readOnly = true)
-    public List<Post> findPosts() {
-        return postDAO.findAll();
+    public List<Post> findPosts(Integer offset, Integer maxResults) {
+        return postDAO.findAll(offset, maxResults);
     }
 
     @Override
@@ -30,6 +35,8 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional
     public Post savePost(Post post) {
+        Long count = postDAO.count();
+        System.out.println(count);
         return postDAO.save(post);
     }
 

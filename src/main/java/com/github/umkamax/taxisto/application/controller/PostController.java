@@ -15,9 +15,15 @@ public class PostController {
     PostService postService;
 
     @ResponseBody
+    @RequestMapping(value = "/count", method = RequestMethod.GET)
+    public Long count() {
+        return postService.count();
+    }
+
+    @ResponseBody
     @RequestMapping(method = RequestMethod.GET)
-    public List<Post> findPosts() {
-        return postService.findPosts();
+    public List<Post> findPosts(@RequestParam("offset") Integer offset, @RequestParam("maxResults") Integer maxResults) {
+        return postService.findPosts(offset, maxResults);
     }
 
     @ResponseBody
