@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="page-header">
+        <h1>Posts</h1>
+    </div>
+    <div ng-repeat="post in posts">
+        <a ui-sref="detail({postId: post.id})">
+            <h2 ng-bind="post.title"></h2>
+        </a>
+        <blockquote ng-bind="post.text"></blockquote>
+        <p ng-cloak>Posted by <a href="#">{{post.author ? post.author : 'admin'}}</a> on {{post.date}}</p>
+        <hr/>
+    </div>
+    <div ng-show="isShowPager">
+        <uib-pager total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="refresh()"></uib-pager>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div ng-show="true">
+                <h2>New post</h2>
+                <form name="addForm" novalidate>
+                    <div class="form-group">
+                        <input class="form-control" ng-model="newPost.title" type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" ng-model="newPost.text" required></textarea>
+                    </div>
+                    <button class="btn btn-primary" style="border-radius: 15px;" ng-click="add()" ng-disabled="addForm.$invalid">Post</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-4">
+        </div>
+        <div class="col-lg-4">
+        </div>
+    </div>
+</div>

@@ -1,82 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" ng-app="taxisto">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+<!--
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Taxisto Example</title>
+
     <!-- Bootstarp CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"/>
-    <style>
-        .container .page-header {
-            margin-top: 70px;
-        }
-        [ng\:cloak], [ng-cloak], .ng-cloak {
-            display: none !important;
-        }
-    </style>
+    <!-- External JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.0/angular-ui-router.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.3/ui-bootstrap-tpls.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../resources/app/app.js"></script>
+    <script src="../resources/app/post/posts.js"></script>
+    <script src="../resources/app/user/users.js"></script>
+
+    <title ng-bind="$state.current.name + ' | Taxisto'">Taxisto</title>
 </head>
-<body ng-app="taxisto">
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Taxisto</a>
+            <button type="button" class="navbar-toggle" ng-init="menuCollapsed = true"
+                    ng-click="menuCollapsed = !menuCollapsed">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" ui-sref="list">Taxisto</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+<!--
+        <p ui-view="hint"></p>
+-->
+        <div class="collapse navbar-collapse" collapse="menuCollapsed">
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="#">Log In</a>
-                </li>
+                <li><a ui-sref="login"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
+                <li><a ui-sref="logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
             </ul>
         </div>
     </div>
-</nav>
-<div class="container" ng-controller="PostController">
-    <div class="page-header">
-        <h1>Posts</h1>
-    </div>
-    <div ng-repeat="post in posts">
-        <a href="#">
-            <h2 ng-bind="post.title"></h2>
-        </a>
-        <blockquote ng-bind="post.text"></blockquote>
-        <p ng-cloak>Posted by <a href="#">{{post.author ? post.author : 'admin'}}</a> on {{post.date}}</p>
-        <hr/>
-    </div>
-    <div ng-show="isShowPager">
-        <uib-pager total-items="totalItems" ng-model="currentPage" items-per-page="itemsPerPage"></uib-pager>
-    </div>
-    <div class="row">
-        <div class="col-lg-4">
-            <div ng-if="true">
-                <h2>New post</h2>
-                <form name="addForm" novalidate>
-                    <div class="form-group">
-                        <input class="form-control" ng-model="newPost.title" type="text" required>
-                    </div>
-                    <div class="form-group">
-                        <textarea class="form-control" ng-model="newPost.text" required></textarea>
-                    </div>
-                    <button class="btn btn-primary" style="border-radius: 15px;" ng-click="add()" ng-disabled="addForm.$invalid">Post</button>
-                </form>
-            </div>
-        </div>
-        <div class="col-lg-4">
-        </div>
-        <div class="col-lg-4">
-        </div>
-    </div>
 </div>
-<!-- External JS -->
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-resource.min.js"></script>
-<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.3/ui-bootstrap-tpls.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
-<!-- Custom JS -->
-<script src="../resources/js/taxisto.js"></script>
+<div ui-view class="container" style="padding-top: 50px;"></div>
+<div class="container">
+    <hr>
+    <pre>
+        $state = {{$state.current.name}}
+        $stateParams = {{$stateParams}}
+        $state full url = {{ $state.$current.url.source }}
+    </pre>
+</div>
 </body>
 </html>

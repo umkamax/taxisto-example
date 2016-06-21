@@ -13,27 +13,25 @@ import java.util.Date;
 public class Post {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private long id;
-
-    @Column
     private String title;
-
-    @Column
     private String text;
-
-    @Column
     @JsonSerialize(using = JsonDateSerializer.class)
     @JsonDeserialize(using = JsonDateDeserializer.class)
     private Date date;
+    @ManyToOne
+    private User user;
 
     public Post() {
+        System.out.println("");
     }
 
-    public Post(String title, String text, Date date) {
+    public Post(String title, String text, Date date, User user) {
         this.title = title;
         this.text = text;
         this.date = date;
+        this.user = user;
     }
 
     public long getId() {
@@ -64,6 +62,13 @@ public class Post {
         this.date = date;
     }
 
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
@@ -71,6 +76,7 @@ public class Post {
                 ", title='" + title + '\'' +
                 ", text='" + text + '\'' +
                 ", date=" + date +
+                ", user=" + user +
                 '}';
     }
 }

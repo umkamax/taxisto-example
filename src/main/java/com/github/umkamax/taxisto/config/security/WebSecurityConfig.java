@@ -1,8 +1,6 @@
 package com.github.umkamax.taxisto.config.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -13,16 +11,26 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+/*
+    @SuppressWarnings("SpringJavaAutowiringInspection")
+    @Autowired
+    private UserDetailServiceImpl userDetailService;
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailService);
+    }
+*/
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .httpBasic()
+            .formLogin()
         .and()
-            .authorizeRequests()
-            .antMatchers("/").permitAll()
+            .authorizeRequests().antMatchers("/**").permitAll()
         .and()
             .csrf().csrfTokenRepository(csrfTokenRepository())
         .and()
@@ -33,12 +41,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
         repository.setHeaderName("X-XSRF-TOKEN");
         return repository;
-    }
-
-    @Autowired
-    public void registerGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser("admin").password("admin").roles("USER", "ADMIN");
     }
 }

@@ -29,14 +29,12 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional(readOnly = true)
     public Post findPostById(Long postId) {
-        return null;
+        return postDAO.findById(postId);
     }
 
     @Override
     @Transactional
     public Post savePost(Post post) {
-        Long count = postDAO.count();
-        System.out.println(count);
         return postDAO.save(post);
     }
 

@@ -10,5 +10,6 @@ public interface PostDAO {
     void delete(Long postId);
     Long count();
     List<Post> findAll(Integer offset, Integer maxResults);
+    Post findById(Long postId);
 
 }

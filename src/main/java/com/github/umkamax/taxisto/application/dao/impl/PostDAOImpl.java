@@ -41,9 +41,14 @@ public class PostDAOImpl implements PostDAO {
 
     @Override
     public List<Post> findAll(Integer offset, Integer maxResults) {
-        return em.createQuery(" from " + Post.class.getName() + " order by date desc")
+        return em.createQuery(" from Post order by date desc")
                 .setFirstResult(offset != null ? offset : 0)
                 .setMaxResults(maxResults != null ? maxResults : POSTS_BY_PAGE)
                 .getResultList();
+    }
+
+    @Override
+    public Post findById(Long postId) {
+        return em.find(Post.class, postId);
     }
 }

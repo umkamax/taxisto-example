@@ -1,0 +1,6 @@
+<div class="container">
+    <h2 ng-bind="post.title"></h2>
+    <blockquote ng-bind="post.text"></blockquote>
+    <p ng-cloak>Posted by <a href="#">{{post.author ? post.author : 'admin'}}</a> on {{post.date}}</p>
+    <hr/>
+</div>

@@ -27,6 +27,13 @@ public class PostController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/{postId}", method = RequestMethod.GET)
+    public Post findPost(@PathVariable("postId") Long postId) {
+        return postService.findPostById(postId);
+    }
+
+//    @Secured("ROLE_ADMIN")
+    @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
     public Post savePost(@RequestBody Post post) {
         return postService.savePost(post);
