@@ -1,0 +1,29 @@
+{
+  "variables": {
+    "version": "{{env `BUILD_VERSION`}}",
+    "buildDir": "{{env `TRAVIS_BUILD_DIR`}}"
+  },
+
+  "builders": [
+    {
+      "type": "docker",
+      "image": "openjdk:8",
+      "commit": true
+    }
+  ],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "mkdir -p /opt/taxisto-example/"
+      ]
+    },
+    {
+      "type": "file",
+      "source": "{{user `buildDir`}}/target/taxisto-example",
+      "destination": "/opt/taxisto-example/github-manager"
+    }
+  ]
+
+}
