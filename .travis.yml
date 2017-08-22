@@ -10,5 +10,8 @@ before_install:
 env:
 - BUILD_VERSION="1.0"
 
+before_script:
+- packer validate packerfile.json
+
 script:
 - packer build packerfile.json
