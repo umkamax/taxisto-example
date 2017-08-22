@@ -8,4 +8,4 @@ before_install:
 - rm packer_1.0.4_linux_amd64.zip
 
 script:
-- packer build docker_packerfile.json
+- packer build packerfile.json
