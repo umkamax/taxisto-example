@@ -16,12 +16,12 @@
     {
       "type": "shell",
       "inline": [
-        "mkdir -p /opt/taxisto-example/-{{user `version`}}"
+        "mkdir -p /opt/taxisto-example-{{user `version`}}/"
       ]
     },
     {
       "type": "file",
-      "source": "{{user `buildDir`}}/target/taxisto-example",
+      "source": "{{user `buildDir`}}/target/taxisto-example-{{user `version`}}",
       "destination": "/opt/taxisto-example-{{user `version`}}/github-manager"
     }
   ]
