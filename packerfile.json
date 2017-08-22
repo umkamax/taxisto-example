@@ -21,7 +21,7 @@
     },
     {
       "type": "file",
-      "source": "{{user `buildDir`}}/target/taxisto-example-{{user `version`}}",
+      "source": "{{user `buildDir`}}/target/taxisto-example",
       "destination": "/opt/taxisto-example-{{user `version`}}/github-manager"
     }
   ]
